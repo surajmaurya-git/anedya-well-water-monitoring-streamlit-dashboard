@@ -20,8 +20,8 @@ def is_within_tolerance(time1, time2, tolerance=timedelta(seconds=60)):
 def get_default_time_range():
     
     # Get the current date and time in the Indian time zone
-    indian_time_zone = pytz.timezone('Asia/Kolkata')
-    current_date = datetime.now(indian_time_zone)
+    time_zone = pytz.timezone(st.session_state.time_zone)
+    current_date = datetime.now(time_zone)
     
 
     # Extract the year, month, and day

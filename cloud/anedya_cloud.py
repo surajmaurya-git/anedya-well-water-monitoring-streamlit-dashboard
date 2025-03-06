@@ -177,7 +177,7 @@ def get_data(
             # Remove similar data points
             df.drop_duplicates(subset=["timestamp"], keep="first", inplace=True)
             df["Datetime"] = pd.to_datetime(df["timestamp"], unit="s")
-            local_tz = pytz.timezone("Asia/Kolkata")  # Change to your local time zone
+            local_tz = pytz.timezone(st.session_state.time_zone)  # Change to your local time zone
             df["Datetime"] = (
                 df["Datetime"].dt.tz_localize("UTC").dt.tz_convert(local_tz)
             )
@@ -253,7 +253,7 @@ def anedya_getAggData(
                 df.drop_duplicates(subset=["timestamp"], keep="first", inplace=True)
                 
             df["Datetime"] = pd.to_datetime(df["timestamp"], unit="s")
-            local_tz = pytz.timezone("Asia/Kolkata")  # Change to your local time zone
+            local_tz = pytz.timezone(st.session_state.time_zone)  # Change to your local time zone
             df["Datetime"] = (
                 df["Datetime"].dt.tz_localize("UTC").dt.tz_convert(local_tz)
             )

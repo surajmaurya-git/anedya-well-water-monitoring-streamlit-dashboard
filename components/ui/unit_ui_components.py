@@ -60,6 +60,7 @@ def unit_details(data):
 def cards_section(node_client=None):
     container = st.container(border=True)
     VARIABLES = st.session_state.variables
+    time_zone = pytz.timezone(st.session_state.time_zone)  # set time zone
     with container:
         st.subheader(body="Parameters", anchor=False)
         r1_cols = st.columns([1, 1, 1, 1], gap="small")
@@ -67,10 +68,19 @@ def cards_section(node_client=None):
             VARIABLE = VARIABLES["variable_1"]
             data = node_client.get_latestData(VARIABLE["identifier"])
             value = data.get("data")
+            timestamp = data.get("timestamp")
+            hr_timestamp = datetime.fromtimestamp(timestamp, time_zone)
+            fm_hr_timestamp = hr_timestamp.strftime("%Y-%m-%d %H:%M:%S %Z")
+            st.markdown(f"**Last Updated:** {fm_hr_timestamp}")
             st.metric(label=VARIABLE["name"], value=f"{value} {VARIABLE['unit']} 💧", border=True)
         with r1_cols[1]:
             VARIABLE = VARIABLES["variable_2"]
             data = node_client.get_latestData(VARIABLE["identifier"])
+            value = data.get("data")
+            timestamp = data.get("timestamp")
+            hr_timestamp = datetime.fromtimestamp(timestamp, time_zone)
+            fm_hr_timestamp = hr_timestamp.strftime("%Y-%m-%d %H:%M:%S %Z")
+            st.markdown(f"**Last Updated:** {fm_hr_timestamp}")
             value = data.get("data")
             st.metric(label=VARIABLE["name"], value=f"{value} {VARIABLE['unit']} 💧", border=True)
 
@@ -78,11 +88,21 @@ def cards_section(node_client=None):
             VARIABLE = VARIABLES["variable_3"]
             data = node_client.get_latestData(VARIABLE["identifier"])
             value = data.get("data")
+            timestamp = data.get("timestamp")
+            hr_timestamp = datetime.fromtimestamp(timestamp, time_zone)
+            fm_hr_timestamp = hr_timestamp.strftime("%Y-%m-%d %H:%M:%S %Z")
+            st.markdown(f"**Last Updated:** {fm_hr_timestamp}")
+            value = data.get("data")
             st.metric(label=VARIABLE["name"], value=f"{value} {VARIABLE['unit']} 💧", border=True)
 
         with r1_cols[3]:
             VARIABLE = VARIABLES["variable_4"]
             data = node_client.get_latestData(VARIABLE["identifier"])
+            value = data.get("data")
+            timestamp = data.get("timestamp")
+            hr_timestamp = datetime.fromtimestamp(timestamp, time_zone)
+            fm_hr_timestamp = hr_timestamp.strftime("%Y-%m-%d %H:%M:%S %Z")
+            st.markdown(f"**Last Updated:** {fm_hr_timestamp}")
             value = data.get("data")
             st.metric(label=VARIABLE["name"], value=f"{value} {VARIABLE['unit']} 💧", border=True)
         r2_cols = st.columns([1, 1, 1, 1], gap="small")
@@ -90,11 +110,21 @@ def cards_section(node_client=None):
             VARIABLE = VARIABLES["variable_5"]
             data = node_client.get_latestData(VARIABLE["identifier"])
             value = data.get("data")
+            timestamp = data.get("timestamp")
+            hr_timestamp = datetime.fromtimestamp(timestamp, time_zone)
+            fm_hr_timestamp = hr_timestamp.strftime("%Y-%m-%d %H:%M:%S %Z")
+            st.markdown(f"**Last Updated:** {fm_hr_timestamp}")
+            value = data.get("data")
             st.metric(label=VARIABLE["name"], value=f"{value} {VARIABLE['unit']}💧", border=True)
 
         with r1_cols[1]:
             VARIABLE = VARIABLES["variable_6"]
             data = node_client.get_latestData(VARIABLE["identifier"])
+            value = data.get("data")
+            timestamp = data.get("timestamp")
+            hr_timestamp = datetime.fromtimestamp(timestamp, time_zone)
+            fm_hr_timestamp = hr_timestamp.strftime("%Y-%m-%d %H:%M:%S %Z")
+            st.markdown(f"**Last Updated:** {fm_hr_timestamp}")
             value = data.get("data")
             st.metric(label=VARIABLE["name"], value=f"{value} {VARIABLE['unit']}💧", border=True)
 
@@ -102,11 +132,21 @@ def cards_section(node_client=None):
             VARIABLE = VARIABLES["variable_7"]
             data = node_client.get_latestData(VARIABLE["identifier"])
             value = data.get("data")
+            timestamp = data.get("timestamp")
+            hr_timestamp = datetime.fromtimestamp(timestamp, time_zone)
+            fm_hr_timestamp = hr_timestamp.strftime("%Y-%m-%d %H:%M:%S %Z")
+            st.markdown(f"**Last Updated:** {fm_hr_timestamp}")
+            value = data.get("data")
             st.metric(label=VARIABLE["name"], value=f"{value} {VARIABLE['unit']} 💧", border=True)
 
         with r1_cols[3]:
             VARIABLE = VARIABLES["variable_8"]
             data = node_client.get_latestData(VARIABLE["identifier"])
+            value = data.get("data")
+            timestamp = data.get("timestamp")
+            hr_timestamp = datetime.fromtimestamp(timestamp, time_zone)
+            fm_hr_timestamp = hr_timestamp.strftime("%Y-%m-%d %H:%M:%S %Z")
+            st.markdown(f"**Last Updated:** {fm_hr_timestamp}")
             value = data.get("data")
             st.metric(label=VARIABLE["name"], value=f"{value} {VARIABLE['unit']}💧", border=True)
 
@@ -118,7 +158,7 @@ def gauge_section(node_client=None):
     VARIABLES = st.session_state.variables
     with container:
 
-        indian_time_zone = pytz.timezone("Asia/Kolkata")  # set time zone
+        time_zone = pytz.timezone(st.session_state.time_zone)  # set time zone
         r1_guage_cols = st.columns([1, 1, 1], gap="small")
 
         with r1_guage_cols[0]:
@@ -126,7 +166,7 @@ def gauge_section(node_client=None):
             data = node_client.get_latestData(VARIABLE["identifier"])
             if data.get("data") != None:
                 timestamp = data.get("timestamp")
-                hr_timestamp = datetime.fromtimestamp(timestamp, indian_time_zone)
+                hr_timestamp = datetime.fromtimestamp(timestamp, time_zone)
                 fm_hr_timestamp = hr_timestamp.strftime("%Y-%m-%d %H:%M:%S %Z")
                 st.markdown(f"**Last Updated:** {fm_hr_timestamp}")
                 value = data.get("data")
@@ -146,7 +186,7 @@ def gauge_section(node_client=None):
             data = node_client.get_latestData(VARIABLE["identifier"])
             if data.get("data") != None:
                 timestamp = data.get("timestamp")
-                hr_timestamp = datetime.fromtimestamp(timestamp, indian_time_zone)
+                hr_timestamp = datetime.fromtimestamp(timestamp, time_zone)
                 fm_hr_timestamp = hr_timestamp.strftime("%Y-%m-%d %H:%M:%S %Z")
                 st.markdown(f"**Last Updated:** {fm_hr_timestamp}")
                 value = data.get("data")
@@ -296,10 +336,10 @@ def graph_section(node_client=None):
                 )
                 # st.write("Combined datetime:", combined_datetime)
                 # Define the India time zone
-                india_tz = pytz.timezone("Asia/Kolkata")
+                time_zone = pytz.timezone(st.session_state.time_zone)
 
                 # Localize the combined datetime to the India time zone
-                localized_datetime = india_tz.localize(combined_datetime)
+                localized_datetime = time_zone.localize(combined_datetime)
 
                 # Convert the localized datetime to epoch time
                 from_time = int(localized_datetime.timestamp())
@@ -330,10 +370,10 @@ def graph_section(node_client=None):
                 # st.write("Combined datetime:", combined_datetime)
 
                 # Define the India time zone
-                india_tz = pytz.timezone("Asia/Kolkata")
+                time_zone = pytz.timezone(st.session_state.time_zone)
 
                 # Localize the combined datetime to the India time zone
-                localized_datetime = india_tz.localize(combined_datetime)
+                localized_datetime = time_zone.localize(combined_datetime)
 
                 # Convert the localized datetime to epoch time
                 to_time = int(localized_datetime.timestamp())
@@ -467,8 +507,8 @@ def map_section(node_client=None):
         if res.get("data") is not None:
             location = res.get("data")
             last_updated = res.get("timestamp")
-            indian_time_zone = pytz.timezone("Asia/Kolkata")  # set time zone
-            hr_timestamp = datetime.fromtimestamp(last_updated, indian_time_zone)
+            time_zone = pytz.timezone(st.session_state.time_zone)  # set time zone
+            hr_timestamp = datetime.fromtimestamp(last_updated, time_zone)
             fm_hr_timestamp = hr_timestamp.strftime("%Y-%m-%d %H:%M:%S %Z")
             st.markdown(f"**Last Updated:**  {fm_hr_timestamp}")
 

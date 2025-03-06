@@ -19,6 +19,9 @@ def initialize_session_state():
     if "create_pages" not in st.session_state:  
         st.session_state.create_pages = False
     
+    if "time_zone" not in st.session_state:
+        st.session_state.time_zone = "Asia/dubai"
+    
     # ======== Anedya ====================
     if "anedya_client" not in st.session_state:
         st.session_state.anedya_client = None
