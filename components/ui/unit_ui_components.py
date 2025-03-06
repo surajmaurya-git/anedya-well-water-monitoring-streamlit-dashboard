@@ -57,44 +57,60 @@ def unit_details(data):
     # st.text(f"IMEI No.: {data.get('imei_id')}")
 
 
-def cards_section(data: dict = None):
+def cards_section(node_client=None):
     container = st.container(border=True)
+    VARIABLES = st.session_state.variables
     with container:
         st.subheader(body="Parameters", anchor=False)
         r1_cols = st.columns([1, 1, 1, 1], gap="small")
         with r1_cols[0]:
-            BOOKING_STATUS = data.get("booking")
-            value = "ND"
-            if BOOKING_STATUS:
-                value = "Booked"
-            else:
-                value = "Not Booked"
-            st.metric(label="Booking Status", value=value, border=True)
+            VARIABLE = VARIABLES["variable_1"]
+            data = node_client.get_latestData(VARIABLE["identifier"])
+            value = data.get("data")
+            st.metric(label=VARIABLE["name"], value=f"{value} {VARIABLE['unit']} 💧", border=True)
         with r1_cols[1]:
-            TIME_LEFT = data.get("timeLeft")
-            st.metric(label="Time Left", value=TIME_LEFT, border=True)
+            VARIABLE = VARIABLES["variable_2"]
+            data = node_client.get_latestData(VARIABLE["identifier"])
+            value = data.get("data")
+            st.metric(label=VARIABLE["name"], value=f"{value} {VARIABLE['unit']} 💧", border=True)
+
         with r1_cols[2]:
-            END_EPOCH = data.get("endEpoch")
-            st.metric(label="End Epoch", value=END_EPOCH, border=True)
+            VARIABLE = VARIABLES["variable_3"]
+            data = node_client.get_latestData(VARIABLE["identifier"])
+            value = data.get("data")
+            st.metric(label=VARIABLE["name"], value=f"{value} {VARIABLE['unit']} 💧", border=True)
+
         with r1_cols[3]:
-            NAP_TIME = data.get("napTime")
-            st.metric(label="Nap Time", value=NAP_TIME, border=True)
-
+            VARIABLE = VARIABLES["variable_4"]
+            data = node_client.get_latestData(VARIABLE["identifier"])
+            value = data.get("data")
+            st.metric(label=VARIABLE["name"], value=f"{value} {VARIABLE['unit']} 💧", border=True)
         r2_cols = st.columns([1, 1, 1, 1], gap="small")
-        with r2_cols[0]:
-            WIFI_SIGNAL = data.get("wifiSignal")
-            st.metric(label="Wifi Signal", value=WIFI_SIGNAL, border=True)
+        with r1_cols[0]:
+            VARIABLE = VARIABLES["variable_5"]
+            data = node_client.get_latestData(VARIABLE["identifier"])
+            value = data.get("data")
+            st.metric(label=VARIABLE["name"], value=f"{value} {VARIABLE['unit']}💧", border=True)
 
-        with r2_cols[1]:
-            RFID_GAIN = data.get("rfidGain")
-            st.metric(label="RFID Gain", value=RFID_GAIN, border=True)
+        with r1_cols[1]:
+            VARIABLE = VARIABLES["variable_6"]
+            data = node_client.get_latestData(VARIABLE["identifier"])
+            value = data.get("data")
+            st.metric(label=VARIABLE["name"], value=f"{value} {VARIABLE['unit']}💧", border=True)
 
-        with r2_cols[2]:
-            RFID = data.get("rfid")
-            st.metric(label="RFID", value=RFID, border=True)
-        with r2_cols[3]:
-            CAN = data.get("can")
-            st.metric(label="CAN", value=CAN, border=True)
+        with r1_cols[2]:
+            VARIABLE = VARIABLES["variable_7"]
+            data = node_client.get_latestData(VARIABLE["identifier"])
+            value = data.get("data")
+            st.metric(label=VARIABLE["name"], value=f"{value} {VARIABLE['unit']} 💧", border=True)
+
+        with r1_cols[3]:
+            VARIABLE = VARIABLES["variable_8"]
+            data = node_client.get_latestData(VARIABLE["identifier"])
+            value = data.get("data")
+            st.metric(label=VARIABLE["name"], value=f"{value} {VARIABLE['unit']}💧", border=True)
+
+     
 
 
 def gauge_section(node_client=None):
@@ -106,7 +122,7 @@ def gauge_section(node_client=None):
         r1_guage_cols = st.columns([1, 1, 1], gap="small")
 
         with r1_guage_cols[0]:
-            VARIABLE = VARIABLES["variable_3"]
+            VARIABLE = VARIABLES["variable_8"]
             data = node_client.get_latestData(VARIABLE["identifier"])
             if data.get("data") != None:
                 timestamp = data.get("timestamp")
@@ -126,24 +142,23 @@ def gauge_section(node_client=None):
             else:
                 st.error("No Data Available")
         with r1_guage_cols[1]:
-            VARIABLE = VARIABLES["variable_4"]
+            VARIABLE = VARIABLES["variable_8"]
             data = node_client.get_latestData(VARIABLE["identifier"])
             if data.get("data") != None:
                 timestamp = data.get("timestamp")
                 hr_timestamp = datetime.fromtimestamp(timestamp, indian_time_zone)
                 fm_hr_timestamp = hr_timestamp.strftime("%Y-%m-%d %H:%M:%S %Z")
-                st.markdown(f"**Last Updated:**  {fm_hr_timestamp}")
+                st.markdown(f"**Last Updated:** {fm_hr_timestamp}")
                 value = data.get("data")
-                arTop = int(VARIABLE["top_range"])
-                arBot = int(VARIABLE["bottom_range"])
+                import dash_daq as daq
                 sv.gauge(
                     value,
                     VARIABLE["name"],
                     cWidth=True,
                     gSize="MED",
-                    sFix="V",
-                    arTop=arTop,
-                    arBot=arBot,
+                    sFix=VARIABLE["unit"],
+                    arTop=int(VARIABLE["top_range"]),
+                    arBot=int(VARIABLE["bottom_range"]),
                 )
             else:
                 st.error("No Data Available")
@@ -340,7 +355,7 @@ def graph_section(node_client=None):
 
         with datetime_cols[2]:
             reset_btn = st.button(
-                label="Default", on_click=reset_time_range, use_container_width=True
+                label="Live", on_click=reset_time_range, use_container_width=True
             )
             if reset_btn:
                 auto_update_time_range(True)

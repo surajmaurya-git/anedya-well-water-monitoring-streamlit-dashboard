@@ -32,11 +32,11 @@ def draw_unit_1_dashboard():
         device_status_res=device_status_res,
     )
     unit_details(NODE_ID)
-    gauge_section(node)
-    # cards_section(vitals_value)
+    # gauge_section(node)
+    cards_section(node)
     # controllers_section(node)
     graph_section(node)
-    map_section(node)
+    # map_section(node)
 
 
 draw_unit_1_dashboard()

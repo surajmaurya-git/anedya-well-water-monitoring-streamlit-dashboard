@@ -21,8 +21,7 @@ def get_default_time_range():
     
     # Get the current date and time in the Indian time zone
     indian_time_zone = pytz.timezone('Asia/Kolkata')
-    # current_date = datetime.now(indian_time_zone)
-    current_date = datetime.fromtimestamp(1741130259,indian_time_zone)  # patch to adjust time according to client, remove this later
+    current_date = datetime.now(indian_time_zone)
     
 
     # Extract the year, month, and day
