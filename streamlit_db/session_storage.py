@@ -78,7 +78,7 @@ def initialize_session_state():
     if "from_input_time" not in st.session_state:
         current_date = datetime.now()
         epoach_time=int(current_date.timestamp())
-        st.session_state.from_input_time = int(epoach_time - 86400)
+        st.session_state.from_input_time = int(epoach_time - 172800)
     if "to_input_time" not in st.session_state:
         current_date = datetime.now()
         epoach_time=int(current_date.timestamp())

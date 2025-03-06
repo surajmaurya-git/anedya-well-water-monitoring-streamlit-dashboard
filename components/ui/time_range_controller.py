@@ -49,7 +49,7 @@ def get_default_time_range():
     # st.session_state.from_time = from_time_object
     
     # Subtract one day to get yesterday's date
-    yesterday_date = current_date - timedelta(days=1)
+    yesterday_date = current_date - timedelta(days=2)
     # Extract the year, month, and day
     yesterday_year = yesterday_date.year
     yesterday_month = yesterday_date.month

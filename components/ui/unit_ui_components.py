@@ -411,9 +411,9 @@ def graph_section(node_client=None):
             agg_interval = 60
         elif interval > 864000:
             agg_interval = 30
-        elif interval > 100080:
+        elif interval > 216000:
             agg_interval = 10
-        elif interval <= 100080:
+        elif interval <= 216000:
             agg_interval = 0
 
         VARIABLES = st.session_state.variables
@@ -461,7 +461,7 @@ def graph_section(node_client=None):
                         VARIABLE = VARIABLES.get(VARIABLE_KEY)
                         # data=pd.DataFrame()
                         aggregate_or_value="value"
-                        if interval <= 100080:
+                        if interval <= 216000:
                             data=node_client.get_data(variable_identifier=VARIABLE.get("identifier"),from_time=st.session_state.from_input_time,to_time=st.session_state.to_input_time)
                             aggregate_or_value="value"
                         else:
