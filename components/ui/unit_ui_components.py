@@ -434,7 +434,6 @@ def graph_section(node_client=None):
             st.error("No variables available")
             st.stop()
         default_options=options[7]
-        st.write(len(options))
         if len(options)<=7:
             default_options=options[0]
 
