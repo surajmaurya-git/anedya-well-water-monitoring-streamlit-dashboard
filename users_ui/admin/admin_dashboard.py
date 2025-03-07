@@ -30,7 +30,6 @@ def drawAdminDashboard():
             st.Page(
                 f"{current_dir}/users_ui/admin/sections/create_users.py",
                 title="Create Users",
-                default=True,
             ),
             st.Page(
                 f"{current_dir}/users_ui/admin/sections/users_managements.py",
@@ -38,6 +37,7 @@ def drawAdminDashboard():
             ),
         ],
         f"{NODES_NAME}s": [
+            st.Page(f"{current_dir}/nodes/{NODES_NAME}_1.py", title=f"{NODES_NAME} 1", icon="🛜", default=True) if i == 1 else
             st.Page(f"{current_dir}/nodes/{NODES_NAME}_{i}.py", title=f"{NODES_NAME} {i}", icon="🛜") for i in range(1, NUMBER_OF_NODES)
         ],
     }
