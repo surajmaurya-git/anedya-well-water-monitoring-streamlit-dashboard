@@ -172,7 +172,8 @@ def get_data(
             df = pd.DataFrame(data_list)
 
             if df.duplicated(subset=["timestamp"]).any():
-                st.warning("Found duplicate datapoints.")
+                # st.warning("Found duplicate datapoints.")
+                pass
 
             # Remove similar data points
             df.drop_duplicates(subset=["timestamp"], keep="first", inplace=True)
@@ -248,7 +249,8 @@ def anedya_getAggData(
             df = pd.DataFrame(data_list)
 
             if df.duplicated(subset=["timestamp"]).any():
-                st.warning("Found duplicate datapoints.")
+                # st.warning("Found duplicate datapoints.")
+                # temporary suspressing the warning
                 # Remove similar data points
                 df.drop_duplicates(subset=["timestamp"], keep="first", inplace=True)
                 
